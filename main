@@ -1,0 +1,6 @@
+#!/bin/bash
+
+inputFile='questions/file1'
+text=$(cat $inputFile)
+
+llama-cli -m /var/models/mistral-7b-instruct-v0.2.Q8_0.gguf -p "answer the following questions: $text" -no-cnv > out.txt
