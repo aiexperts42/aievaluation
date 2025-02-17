@@ -1,6 +1,11 @@
 #!/bin/bash
 
+input=$(cat questions/image.txt)
+llama-cli -m /var/models/sauerkrautlm-una-solar-instruct.Q5_K_M.gguf -p \
+"\nDieser text ist mit ocr erstellt worden. ko\n$input" -no-cnv
+
+
 inputFile='questions/file1'
 text=$(cat $inputFile)
 
-llama-cli -m /var/models/mistral-7b-instruct-v0.2.Q8_0.gguf -p "answer the following questions: $text" -no-cnv > out.txt
+llama-cli -m /var/models/mistral-7b-instruct-v0.2.Q8_0.gguf -p "\n$text" -no-cnv
