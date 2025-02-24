@@ -1,4 +1,0 @@
-#!/bin/bash
-
-convert $1 -colorspace Gray -threshold 35% output_image.png
-tesseract output_image.png ocr.txt -l deu
