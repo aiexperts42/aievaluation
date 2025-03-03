@@ -20,12 +20,12 @@ fi
   inputFile='questions/ocr.txt'
   text=$(cat $inputFile)
 
-  rm output.txt
+  rm tmp/output.txt
   rm output.pdf
 
   llama-cli -m /var/models/mistral-7b-instruct-v0.2.Q8_0.gguf \
   --in-prefix "solve the test in german and with short sentences and don't add your own questions" \
-  -p "$text\n\nAnswers:\n\n" -no-cnv -n 512 $is_ngl >> output.txt
+  -p "$text\n\nAnswers:\n\n" -no-cnv -n 512 $is_ngl >> tmp/output.txt
 
-  pandoc output.txt -o output.pdf
+  pandoc tmp/output.txt -o output.pdf
 fi
