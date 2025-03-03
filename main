@@ -1,17 +1,24 @@
 #!/bin/bash
 
 if [ "x$1" == "x-h" ];then
-  echo "usage: main <input_file> [n_gpu_layer]"
+  echo "usage: main <input_file> <model_path> [n_gpu_layer]"
   exit 1
 elif [ "x$1" == "x" ]; then
   echo "enter a png file"
   exit 2
 else
 
-if [ "-ngl $2" == "-ngl " ];then
+if [ "x$2" == "x" ];then
+  echo "enter the model-path"
+  exit 2
+else
+  model_path="$2"
+fi
+
+if [ "-ngl $3" == "-ngl " ];then
   is_ngl=""
 else
-  is_ngl="-ngl $2"
+  is_ngl="-ngl $3"
 fi
 
   convert $1 -colorspace Gray -threshold 35% tmp/output_image.png
@@ -23,10 +30,10 @@ fi
   rm tmp/output.txt
   rm output.pdf
 
-  echo Answers\n > tmp/output.tmp
+  echo Answers\n > tmp/output.txt
 
-  llama-cli -m /var/models/mistral-7b-instruct-v0.2.Q8_0.gguf \
-  --in-prefix "solve the test in german and with short sentences and don't add your own questions" \
+  llama-cli -m $model_path \
+  --in-prefix "solve the test in german and with short sentences and don't add your own questions without using unicode charecters" \
   -p "$text\n\nAnswers:\n\n" -no-cnv -n 512 $is_ngl >> tmp/output.txt
 
   pandoc tmp/output.txt -o output.pdf
