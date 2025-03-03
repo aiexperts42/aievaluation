@@ -1,9 +1,18 @@
 #!/bin/bash
 
-if [ "x$1" == "x" ]; then
+if [ "x$1" == "x-h" ];then
+  echo "usage: main <input_file> [n_gpu_layer]"
+  exit 1
+elif [ "x$1" == "x" ]; then
   echo "enter a png file"
   exit 2
 else
+
+if [ "-ngl $2" == "-ngl " ];then
+  is_ngl=""
+else
+  is_ngl="-ngl $2"
+fi
 
   convert $1 -colorspace Gray -threshold 35% questions/output_image.png
   tesseract questions/output_image.png questions/ocr -l deu
@@ -16,8 +25,7 @@ else
 
   llama-cli -m /var/models/mistral-7b-instruct-v0.2.Q8_0.gguf \
   --in-prefix "solve the test in german and with short sentences and don't add your own questions" \
-  -p "$text\n\nAnswers:\n\n" -no-cnv -n 512 -ngl 14 >> output.txt
+  -p "$text\n\nAnswers:\n\n" -no-cnv -n 512 $is_ngl >> output.txt
 
   pandoc output.txt -o output.pdf
-  #echo $output
 fi
