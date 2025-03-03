@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Prüfen, ob pandoc installiert ist
+if ! command -v pandoc &> /dev/null; then
+    echo "Pandoc ist nicht installiert. Installiere es mit: sudo apt install pandoc"
+    exit 1
+fi
+
+# Prüfen, ob eine Datei übergeben wurde
+if [ "$#" -ne 1 ]; then
+    echo "Verwendung: $0 datei.txt"
+    exit 1
+fi
+
+input_file="$1"
+output_file="${input_file%.txt}.pdf"
+
+# Umwandlung mit Pandoc
+pandoc "$input_file" -o "$output_file"
+
+echo "Konvertierung abgeschlossen: $output_file"
+
