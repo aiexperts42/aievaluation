@@ -14,10 +14,10 @@ else
   is_ngl="-ngl $2"
 fi
 
-  convert $1 -colorspace Gray -threshold 35% questions/output_image.png
-  tesseract questions/output_image.png questions/ocr -l deu
+  convert $1 -colorspace Gray -threshold 35% tmp/output_image.png
+  tesseract tmp/output_image.png tmp/ocr -l deu
 
-  inputFile='questions/ocr.txt'
+  inputFile='tmp/ocr.txt'
   text=$(cat $inputFile)
 
   rm tmp/output.txt
