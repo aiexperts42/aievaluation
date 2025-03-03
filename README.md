@@ -5,3 +5,6 @@ please install the model from https://huggingface.co/TheBloke/Mistral-7B-Instruc
 
 ## Instalation
 to install make sure you have installed llama.cpp and run install.sh
+
+##Usage
+main <input_file> [gpu_layers]
