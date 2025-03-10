@@ -30,7 +30,7 @@ fi
   rm tmp/output.txt
   rm output.pdf
 
-  echo Answers\n > tmp/output.txt
+  echo "Lösungen:   " > tmp/output.txt
 
   mod_text=`echo "$text" | sed 's/|//g'`
 
