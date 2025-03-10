@@ -32,9 +32,11 @@ fi
 
   echo Answers\n > tmp/output.txt
 
+  mod_text=`echo "$text" | sed 's/|//g'`
+
   llama-cli -m $model_path \
   --in-prefix "solve the test in german and with short sentences and don't add your own questions without using unicode charecters" \
-  -p "$text\n\nAnswers:\n\n" -no-cnv -n 512 $is_ngl >> tmp/output.txt
+  -p "$mod_text\n\nAntworten:\n\n" -no-cnv -n 512 $is_ngl >> tmp/output.txt
 
   pandoc tmp/output.txt -o output.pdf
 fi
